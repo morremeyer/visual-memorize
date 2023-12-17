@@ -1,0 +1,32 @@
+default_stages: [commit]
+repos:
+  - repo: https://github.com/pre-commit/mirrors-eslint
+    rev: 'v8.56.0'
+    hooks:
+      - id: eslint
+        files: \.[jt]sx?$ # *.js, *.jsx, *.ts and *.tsx
+        types: [file]
+
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: v3.1.0
+    hooks:
+      - id: prettier
+
+  # Explicitly not using the renovate upstream hook because for some reason installing it is
+  # excruciatingly slow (> 10 minutes in some cases)
+  - repo: https://github.com/python-jsonschema/check-jsonschema
+    rev: 0.27.3
+    hooks:
+      - id: check-renovate
+
+  - repo: local
+    hooks:
+      # Taken from https://github.com/rstcheck/rstcheck/blob/178e8c1001aebe2dcbf006e7e6980246704d2315/.pre-commit-config.yaml#L141
+      #
+      # Find FIXME:|BUG: comments in all files
+      # Inline skip: `#i#` directly after the colon after the tag-word
+      - id: find-todos
+        name: 'Find FIXME:|BUG: comments'
+        description: 'Check for FIXME:|BUG: comments in all files'
+        language: pygrep
+        entry: '(^|//!?|#|<!--|;|/\*(\*|!)?|\.\.)\s*(FIXME:|BUG:)(?!#i#)'

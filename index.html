@@ -2,12 +2,45 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite App</title>
+    <title>Visual Memorize</title>
   </head>
   <body>
-    <div id="app"></div>
-    <script type="module" src="/main.js"></script>
+    <div id="app">
+      <div id="explanation">
+        <h1>Visual Memorize</h1>
+        <div>
+          Visual Memorize helps you to learn associations with images. For every
+          PDF you drop here the following happens:
+          <ol>
+            <li>
+              Visual Memorize shows you the first picture on a random page of
+              your PDF
+            </li>
+            <li>
+              You press the "arrow right" key, click or tap the image to see the
+              full page of the PDF
+            </li>
+            <li>
+              One you press the "arrow right" key, click or tap the PDF page
+              again, the first image of another random page is shown and the
+              process repeats.
+            </li>
+          </ol>
+          Drop a file anywhere in this window or select a file in the dialog
+          <div>
+            <input
+              type="file"
+              id="file-selector"
+              accept=".pdf"
+              onChange="{onFileSelected}"
+            />
+          </div>
+        </div>
+      </div>
+      <div id="error"></div>
+      <canvas id="canvas"></canvas>
+    </div>
+    <script type="module" src="/src/main.js"></script>
   </body>
 </html>

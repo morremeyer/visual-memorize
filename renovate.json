@@ -1,0 +1,46 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "group:monorepos",
+    "group:recommended",
+    "replacements:all",
+    "workarounds:all",
+    ":ignoreModulesAndTests"
+  ],
+  "dependencyDashboard": true,
+  "pre-commit": {
+    "enabled": true
+  },
+  "labels": ["renovate"],
+  "rangeStrategy": "pin",
+  "rebaseWhen": "behind-base-branch",
+  "semanticCommits": "enabled",
+  "packageRules": [
+    {
+      "matchManagers": [
+        "npm",
+        "github-actions",
+        "pre-commit",
+        "docker-compose",
+        "dockerfile"
+      ],
+      "matchUpdateTypes": ["minor", "patch", "pin"],
+      "automerge": true
+    },
+    {
+      "description": "Disable dockerfile manager for node, version is managed with customManager",
+      "matchDepNames": "node",
+      "matchManagers": "dockerfile",
+      "enabled": false
+    }
+  ],
+  "customManagers": [
+    {
+      "fileMatch": ["^Dockerfile$"],
+      "matchStrings": ["FROM node:(?<currentValue>.*?)-alpine"],
+      "depNameTemplate": "node",
+      "datasourceTemplate": "node",
+      "versioningTemplate": "node"
+    }
+  ]
+}
